@@ -51,7 +51,6 @@ pipeline {
                         docker stop ${CONTAINER_NAME} || true && \\
                         docker rm ${CONTAINER_NAME} || true && \\
                         docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} \\
-                        -e MONGODB_URI='${MONGODB_URI}' ${IMAGE_NAME}:${TAG}"
                     """
                 }
             }
