@@ -1,0 +1,171 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 25% 25%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 25% 25%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 25% 25%;
+
+    /* Updated primary color to match Docta's purple */
+    --primary: 255 84% 69%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Updated secondary color to lighter purple */
+    --secondary: 252 74% 69%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 4% 46%;
+
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 25% 25%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 255 84% 69%;
+
+    --radius: 0.75rem;
+
+    /* Specialty card colors */
+    --specialty-1: 207 84% 52%;
+    --specialty-2: 45 93% 47%;
+    --specialty-3: 155 64% 42%;
+    --specialty-4: 322 81% 43%;
+    --specialty-5: 187 100% 42%;
+    --specialty-6: 280 87% 65%;
+  }
+
+  .dark {
+    --background: 240 25% 8%;
+    --foreground: 0 0% 100%;
+
+    --card: 240 25% 8%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 240 25% 8%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 255 84% 69%;
+    --primary-foreground: 240 25% 8%;
+
+    --secondary: 252 74% 69%;
+    --secondary-foreground: 240 25% 8%;
+
+    --muted: 240 25% 16%;
+    --muted-foreground: 240 5% 65%;
+
+    --accent: 240 25% 16%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 25% 16%;
+    --input: 240 25% 16%;
+    --ring: 255 84% 69%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Custom Scrollbar Styling */
+@layer utilities {
+  /* For Webkit browsers (Chrome, Safari) */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+    border-radius: 5px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary/50 hover:bg-foreground/70 transition-colors;
+    border-radius: 5px;
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--primary) / 50%) hsl(var(--muted));
+  }
+
+  /* Dark mode specific adjustments handled automatically via CSS variables */
+}
+
+/* Custom animation styles for sidebar */
+@layer components {
+  /* Gradient hover effect for sidebar items */
+  .sidebar-item-hover {
+    background-size: 200% 100%;
+    background-position: 100% 0;
+    transition: background-position 0.5s;
+  }
+  
+  .sidebar-item-hover:hover {
+    background-position: 0 0;
+  }
+  
+  /* Active sidebar item styling */
+  .sidebar-item-active {
+    position: relative;
+    @apply bg-primary dark:bg-primary text-background !important;
+  }
+  
+  .sidebar-item-active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 25%;
+    bottom: 25%;
+    width: 3px;
+    border-radius: 0 4px 4px 0;
+    @apply bg-primary;
+    display: none; /* Hide the original indicator since we're using border-l instead */
+  }
+}
+
+/* Adjust content to match sidebar width */
+.sidebar-content {
+  transition: margin-left 0.3s ease;
+}
+
+/* Add this to your existing globals.css file */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: hsl(var(--muted));
+  border-radius: 20px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--muted-foreground));
+}
+
+/* Existing styles remain unchanged */

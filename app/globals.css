@@ -1,0 +1,10 @@
+/* Add these rules to your existing globals.css */
+
+.card {
+  isolation: isolate;
+}
+
+.tabs-content {
+  position: relative;
+  z-index: 1;
+}
