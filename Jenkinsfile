@@ -44,23 +44,18 @@ pipeline {
     }
 
     stage('Deploy on EC2') {
-      steps {
-        withCredentials([
-          sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'EC2_KEY'),
-          file(credentialsId: 'smartfit-dotenv', variable: 'DOTENV_FILE')
-        ]) {
-          sh '''
-            scp -o StrictHostKeyChecking=no -i "$EC2_KEY" "$DOTENV_FILE" ${REMOTE_USER}@${REMOTE_HOST}:/home/${REMOTE_USER}/.env.local
-
-            ssh -o StrictHostKeyChecking=no -i "$EC2_KEY" ${REMOTE_USER}@${REMOTE_HOST} << EOF
-              docker pull ${IMAGE_NAME}:${TAG}
-              docker stop ${CONTAINER_NAME} || true
-              docker rm ${CONTAINER_NAME} || true
-              docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} --env-file /home/${REMOTE_USER}/.env.local ${IMAGE_NAME}:${TAG}
-            EOF
-          '''
+        steps {
+            withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'EC2_KEY')]) {
+                sh """
+                    ssh -o StrictHostKeyChecking=no -i "$EC2_KEY" ${REMOTE_USER}@${REMOTE_HOST} << 'EOF'
+                    docker pull ${IMAGE_NAME}:${TAG}
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                    docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} --env-file .env.local ${IMAGE_NAME}:${TAG}
+    EOF
+                """
+            }
         }
-      }
     }
   }
 }
