@@ -40,14 +40,14 @@ pipeline {
         stage('Deploy on EC2') {
             steps {
                 withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-key', keyFileVariable: 'EC2_KEY')]) {
-                    sh '''
-                        ssh -o StrictHostKeyChecking=no -i "$EC2_KEY" ${REMOTE_USER}@${REMOTE_HOST} << EOF
-                          docker pull ${IMAGE_NAME}:${TAG}
-                          docker stop ${CONTAINER_NAME} || true
-                          docker rm ${CONTAINER_NAME} || true
-                          docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} -e MONGODB_URI="${MONGODB_URI}" ${IMAGE_NAME}:${TAG}
-                        EOF
-                    '''
+                   sh """
+                      ssh -o StrictHostKeyChecking=no -i "$EC2_KEY" ${REMOTE_USER}@${REMOTE_HOST} \\
+                      "docker pull ${IMAGE_NAME}:${TAG} && \\
+                       docker stop ${CONTAINER_NAME} || true && \\
+                       docker rm ${CONTAINER_NAME} || true && \\
+                       docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} -e MONGODB_URI='${MONGODB_URI}' ${IMAGE_NAME}:${TAG}"
+                    """
+
                 }
             }
         }
