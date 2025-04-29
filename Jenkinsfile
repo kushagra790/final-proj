@@ -14,7 +14,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git url: 'https://github.com/kushagra790/smart-fit/tree/main/smart-fit.git', branch: 'main'
+                git url: 'https://github.com/kushagra790/final-proj.git', branch: 'main'
             }
         }
 
