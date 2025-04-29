@@ -19,11 +19,15 @@ pipeline {
         }
 
         stage('Build Docker Image') {
-            steps {
-                script {
-                    sh "docker build -t ${IMAGE_NAME}:${TAG} ."
-                }
+          steps {
+            withCredentials([file(credentialsId: 'smartfit-dotenv', variable: 'DOTENV_FILE')]) {
+              sh '''
+                cp $DOTENV_FILE .env.local
+                docker build -t ${IMAGE_NAME}:${TAG} .
+                rm .env.local
+              '''
             }
+          }
         }
 
         stage('Push to Docker Hub') {
