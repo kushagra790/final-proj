@@ -50,7 +50,7 @@ pipeline {
                         "docker pull ${IMAGE_NAME}:${TAG} && \\
                         docker stop ${CONTAINER_NAME} || true && \\
                         docker rm ${CONTAINER_NAME} || true && \\
-                        docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} \\
+                        docker run -d -p ${DOCKER_PORT}:3000 --name ${CONTAINER_NAME} ${IMAGE_NAME}:${TAG}"
                     """
                 }
             }
