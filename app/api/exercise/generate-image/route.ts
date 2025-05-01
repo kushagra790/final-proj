@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { generateExerciseImage } from "@/lib/generative-ai";
+import { generateExerciseImageServer } from "@/lib/server-generative-ai";
 
 export async function POST(request: NextRequest) {
     try {
@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
         // Generate an image based on the exercise name
         const imagePrompt = `A clear, detailed illustration of a person performing the exercise: ${exerciseName}. Show proper form and technique with a clean background.`;
-        const imageUrl = await generateExerciseImage(imagePrompt,exerciseName);
+        const imageUrl = await generateExerciseImageServer(imagePrompt,exerciseName);
 
         // Return the generated image URL and exercise name
         return NextResponse.json({

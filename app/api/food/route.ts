@@ -6,6 +6,8 @@ import dbConnect from "@/lib/mongodb";
 import FoodEntry from "@/models/FoodEntry";
 import { storeImage } from '@/utils/uploadImage';
 import { updateHistoryOnNewEntry } from '@/utils/updateDailyHistory';
+import { generateTextAndImageToTextServer } from '@/lib/server-generative-ai';
+
 
 // Validation schema for food entry
 const foodEntrySchema = z.object({

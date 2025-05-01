@@ -8,6 +8,9 @@ import {
   updateHistoryOnDeletedEntry 
 } from '@/utils/updateDailyHistory';
 
+import { generateTextAndImageToTextServer } from '@/lib/server-generative-ai';
+
+
 // Validation schema for food entry updates
 const foodEntryUpdateSchema = z.object({
   food_name: z.string().min(1).optional(),
