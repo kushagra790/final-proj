@@ -5,7 +5,7 @@ pipeline {
         IMAGE_NAME = "kushagra7905/smart-fit"
         TAG = "latest"
         REMOTE_USER = "ubuntu"
-        REMOTE_HOST = "13.203.226.117"
+        REMOTE_HOST = "13.233.56.143"
         CONTAINER_NAME = "smart-fit-app"
         DOCKER_PORT = "3000"
     }
